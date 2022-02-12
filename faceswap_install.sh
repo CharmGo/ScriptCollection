@@ -92,7 +92,7 @@ function install(){
 
 # 创建桌面软链接
 function createSetupScript(){
-    echo -e $content > setupFSgui.sh
+echo -e $content > setupFSgui.sh
     sudo chmod 755 setupFSgui.sh
     
     if [ -d ~/Desktop ]
@@ -104,6 +104,15 @@ function createSetupScript(){
     fi
 }
 
+# 可能出现的错误
+function tip(){
+	echo -e "运行faceswap时需要进入python虚拟环境	->	1.\033[34m source ./venv_facewsap/bin/activate\033[0m"
+	echo -e "运行gui				 	->	2.\033[34m python3 ./faceswap/faceswap.py gui\033[0m"
+	echo -e "N卡查看gpu占用				->	3.\033[34m watch -n 10 nvidia-smi\033[0m"
+
+	echo -e "\n可能的错误：\n \033[31mImportError: numpy.core.multiarray failed to import\033[0m -> pip install --upgrade numpy "
+}
+
 case $1 in
 	''|"help")
 		echo -e "\033[33m执行路径为：${nowpath} \033[0m"
@@ -111,6 +120,7 @@ case $1 in
 		echo "$0 chenv 检查安装环境并拉取程序"
 		echo "$0 install 开始安装"
 		echo "$0 ln 创建桌面软链接"
+		echo "$0 tip 显示可能的错误信息及解决办法"
 	;;
 	"chenv")
 		echo "检查安装环境"
@@ -120,6 +130,8 @@ case $1 in
 		install
 	;;
 	"ln") createSetupScript
+	;;
+	"tip") tip
 	;;
 esac
 
